@@ -1,0 +1,20 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+test-results/
+*** Add File: modules/11-complex-workflows/pyproject.toml
+[project]
+name = "playwright-learning-11-complex-workflows"
+version = "0.1.0"
+requires-python = ">=3.12,<3.14"
+dependencies = ["pytest>=8,<10", "playwright==1.61.0", "pytest-playwright==0.8.0"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+*** Add File: modules/11-complex-workflows/README.md
+# Module 11: Complex Browser Workflows
+
+Handle interactions that do not fit a single page and click: iframes, new tabs, popups, dialogs, permissions, geolocation, clipboard, and time-dependent behavior. These are common in payment flows, identity providers, maps, reporting tools, and multi-window admin consoles.
+
+The key engineering idea is to register an event expectation before the action that causes it. A popup, download, dialog, or navigation is an event; waiting after the click can miss it.

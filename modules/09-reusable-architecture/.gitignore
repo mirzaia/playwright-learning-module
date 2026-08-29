@@ -1,0 +1,58 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+test-results/
+playwright/.auth/
+*** Add File: modules/09-reusable-architecture/pyproject.toml
+[project]
+name = "playwright-learning-09-reusable-architecture"
+version = "0.1.0"
+requires-python = ">=3.12,<3.14"
+dependencies = ["pytest>=8,<10", "playwright==1.61.0", "pytest-playwright==0.8.0", "learning-commerce-portal"]
+
+[tool.uv.sources]
+learning-commerce-portal = { path = "../../shared/commerce-portal", editable = true }
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+*** Add File: modules/09-reusable-architecture/README.md
+# Module 09: Reusable Test Architecture
+
+Move from one-off scripts to maintainable suites. You will design page objects, component objects, typed test data, custom fixtures, and role-specific browser contexts without hiding important Playwright behavior.
+
+This is the point where abstraction becomes useful: extract repeated business actions, not every locator. A good page object exposes user intent such as `orders.filter_by_status("paid")`; it does not turn every Playwright method into another wrapper.
+
+Read Objectives → Concepts → Exercises → Verification. The local commerce portal supplies deterministic data.
+*** Add File: modules/09-reusable-architecture/01-objectives/README.md
+# Objectives
+
+By the end of this module you can:
+
+- model a page and a repeated UI component with small Python classes;
+- create custom pytest fixtures with explicit scope and teardown;
+- represent test data with typed dataclasses;
+- create separate authenticated contexts for different user roles;
+- identify when an abstraction reduces duplication and when it merely hides Playwright.
+*** Add File: modules/09-reusable-architecture/02-concepts/README.md
+# Concepts: Reusable Architecture
+
+## Page objects
+
+A page object owns selectors and user-level operations for one page. Tests should read like a behavior specification while the page object absorbs selector maintenance. Keep assertions that describe business outcomes in the test; keep interaction mechanics in the object.
+
+## Component objects
+
+Repeated UI such as a table, date picker, or navigation bar is a component, not a page. Compose a page from components instead of creating a deep inheritance tree.
+
+## Fixture scope
+
+Function scope gives isolation; session scope is appropriate for an immutable server or browser binary, not for a mutable logged-in page. A fixture that yields an object must clean it up after the yield.
+
+## Roles and contexts
+
+A browser context is the boundary for cookies and local storage. Create one context per role or scenario when comparing permissions. Never switch a single page between users in one test.
+*** Add File: modules/09-reusable-architecture/03-exercises/README.md
+# Exercises
+
+Create an `OrdersPage` with `login()` and `filter_by_status()` methods, an `OrderRow` component, and a typed order record. Add a fixture that produces a fresh page object per test. Then write two tests that use separate contexts for signed-out and signed-in behavior.

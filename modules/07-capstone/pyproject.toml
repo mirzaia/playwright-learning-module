@@ -1,0 +1,16 @@
+[project]
+name = "playwright-learning-07-capstone"
+version = "0.1.0"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "pytest>=8,<10",
+    "playwright==1.61.0",
+    "pytest-playwright==0.8.0",
+    "learning-commerce-portal",
+]
+
+[tool.uv.sources]
+learning-commerce-portal = { path = "../../shared/commerce-portal", editable = true }
+
+[tool.pytest.ini_options]
+addopts = "-ra"

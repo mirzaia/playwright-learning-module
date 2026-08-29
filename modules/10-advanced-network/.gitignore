@@ -1,0 +1,24 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+test-results/
+*.har
+*** Add File: modules/10-advanced-network/pyproject.toml
+[project]
+name = "playwright-learning-10-advanced-network"
+version = "0.1.0"
+requires-python = ">=3.12,<3.14"
+dependencies = ["pytest>=8,<10", "playwright==1.61.0", "pytest-playwright==0.8.0", "learning-commerce-portal"]
+
+[tool.uv.sources]
+learning-commerce-portal = { path = "../../shared/commerce-portal", editable = true }
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+*** Add File: modules/10-advanced-network/README.md
+# Module 10: Advanced Network Control
+
+Use Playwright as an observability and simulation tool, not only as a click driver. You will observe requests and responses, wait for the exact API call caused by a UI action, modify a real response, abort selected resources, and understand when HAR replay is appropriate.
+
+These techniques are useful when an environment is slow, an upstream service is unreliable, or a rare error state is difficult to reproduce. They must not be used to hide product defects: keep at least one test against the real integration path.
